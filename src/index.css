@@ -5,3 +5,9 @@
 * {
   min-width: 0;
 }
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+  color: transparent;
+  background: none;
+  z-index: 1;
+}
