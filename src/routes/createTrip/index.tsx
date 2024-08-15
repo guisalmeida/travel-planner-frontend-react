@@ -81,7 +81,7 @@ export function CreateTrip() {
         </p>
       </header>
 
-      <main className="flex flex-col gap-4 my-10">
+      <main className="flex flex-col gap-4 my-10 max-w-screen-md">
         <DestinationAndDateInput
           handleChange={handleChange}
           toogleGuestListShow={toogleGuestListShow}

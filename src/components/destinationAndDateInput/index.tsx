@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 import { ArrowRight, Calendar, MapPin, Settings2 } from "lucide-react";
+import { Button } from "../button";
 
 type DestinationAndDateInputProps = {
   isGuestListShow: boolean;
@@ -13,7 +14,7 @@ export function DestinationAndDateInput({
   toogleGuestListShow,
 }: DestinationAndDateInputProps) {
   return (
-    <div className="h-16 bg-zinc-900 w-full max-w-screen-md rounded-xl px-4 shadow-shape flex items-center justify-between gap-5">
+    <div className="h-16 bg-zinc-900 w-full rounded-xl px-4 shadow-shape flex items-center justify-between gap-5">
       <div className="flex gap-2 items-center flex-1">
         <MapPin className="size-5 text-zinc-400" />
         <input
@@ -39,21 +40,15 @@ export function DestinationAndDateInput({
       </div>
 
       {isGuestListShow ? (
-        <button
-          onClick={toogleGuestListShow}
-          className="bg-zinc-800 text-zinc-200 py-2 px-5 rounded-lg flex items-center gap-2 hover:bg-zinc-700  shadow-shape"
-        >
+        <Button onClick={toogleGuestListShow} colorVariant="secondary">
           Alterar local/data
           <Settings2 className="size-5" />
-        </button>
+        </Button>
       ) : (
-        <button
-          onClick={toogleGuestListShow}
-          className="bg-lime-400 text-lime-950 py-2 px-5 rounded-lg flex items-center gap-2 hover:bg-lime-500 shadow-shape"
-        >
+        <Button onClick={toogleGuestListShow}>
           Continuar
           <ArrowRight className="size-5" />
-        </button>
+        </Button>
       )}
     </div>
   );

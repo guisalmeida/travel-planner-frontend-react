@@ -1,6 +1,7 @@
 import { ArrowRight, AtSign, X } from "lucide-react";
 import { Trip } from "../../routes/createTrip";
 import { FormEvent } from "react";
+import { Button } from "../button";
 
 type InviteGuestsModalProps = {
   trip: Trip;
@@ -60,10 +61,10 @@ export function InviteGuestsModal({
               className="bg-transparent text-lg placeholder-zinc-400 flex-1 text-zinc-400"
               placeholder="Digite o e-mail do convidado"
             />
-            <button className="bg-lime-400 text-lime-950 py-2 px-5 rounded-lg flex items-center gap-2 hover:bg-lime-500 transition-all shadow-shape">
+            <Button>
               Convidar
               <ArrowRight className="size-5" />
-            </button>
+            </Button>
           </div>
         </form>
       </div>

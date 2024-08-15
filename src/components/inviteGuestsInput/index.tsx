@@ -1,5 +1,6 @@
 import { ArrowRight, UserRoundPlus } from "lucide-react";
 import { Trip } from "../../routes/createTrip";
+import { Button } from "../button";
 
 type InviteGuestsInputProps = {
   trip: Trip;
@@ -13,7 +14,7 @@ export function InviteGuestsInput({
   toogleConfirmModal,
 }: InviteGuestsInputProps) {
   return (
-    <div className="h-16 bg-zinc-900 w-full max-w-screen-md rounded-xl px-4 shadow-shape flex items-center justify-between gap-5">
+    <div className="h-16 bg-zinc-900 w-full rounded-xl px-4 shadow-shape flex items-center justify-between gap-5">
       <div className="flex gap-2 items-center flex-1 after:block after:w-px after:h-6 after:bg-zinc-400">
         <UserRoundPlus className="size-5 text-zinc-400" />
         {trip.participants.length > 0 ? (
@@ -33,13 +34,10 @@ export function InviteGuestsInput({
         )}
       </div>
 
-      <button
-        onClick={()=>toogleConfirmModal(true)}
-        className="bg-lime-400 text-lime-950 py-2 px-5 rounded-lg flex items-center gap-2 hover:bg-lime-500 transition-all shadow-shape"
-      >
+      <Button onClick={() => toogleConfirmModal(true)}>
         Confirmar viagem
         <ArrowRight className="size-5" />
-      </button>
+      </Button>
     </div>
   );
 }
