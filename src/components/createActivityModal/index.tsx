@@ -12,12 +12,6 @@ export function CreateActivityModal({
     <div className="bg-black/50 fixed inset-0 backdrop-blur-sm flex items-center justify-center">
       <div className="shadow-shape bg-zinc-900 py-5 px-6 rounded-xl space-y-5 w-[640px] relative">
         <div className="space-y-2">
-          <button
-            onClick={() => toogleCreateActivityModal(false)}
-            className="absolute right-6 top-5"
-          >
-            <X className="text-zinc-300 size-4 " />
-          </button>
           <h3 className="text-lg font-semibold">Cadastrar atividade</h3>
           <p className="text-zinc-400 text-sm">
             Todos convidados podem visualizar as atividades.

@@ -18,12 +18,6 @@ export function ConfirmTripModal({
     <div className="bg-black/50 fixed inset-0 backdrop-blur-sm flex items-center justify-center">
       <div className="shadow-shape bg-zinc-900 py-5 px-6 rounded-xl space-y-5 w-[640px] relative">
         <div className="space-y-2">
-          <button
-            onClick={() => toogleConfirmModal(false)}
-            className="absolute right-6 top-5"
-          >
-            <X className="text-zinc-300 size-4 " />
-          </button>
           <h3 className="text-lg font-semibold">Confirmar criação da viagem</h3>
           <p className="text-zinc-400 text-sm">{`Para concluir a criação da viagem para ${trip.destination} nas datas de ${trip.date} preencha seus dados abaixo:`}</p>
         </div>
