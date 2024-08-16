@@ -1,5 +1,6 @@
-import { Calendar, Tag, X } from "lucide-react";
+import { Calendar, Tag } from "lucide-react";
 import { Button } from "../button";
+import { Modal } from "../modal";
 
 type CreateActivityModalProps = {
   toogleCreateActivityModal: (value: boolean) => void;
@@ -9,7 +10,7 @@ export function CreateActivityModal({
   toogleCreateActivityModal,
 }: CreateActivityModalProps) {
   return (
-    <div className="bg-black/50 fixed inset-0 backdrop-blur-sm flex items-center justify-center">
+    <Modal toogleFn={toogleCreateActivityModal}>
       <div className="shadow-shape bg-zinc-900 py-5 px-6 rounded-xl space-y-5 w-[640px] relative">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Cadastrar atividade</h3>
@@ -38,11 +39,9 @@ export function CreateActivityModal({
             />
           </div>
 
-          <Button sizeVariant="full">
-            Salvar atividade
-          </Button>
+          <Button sizeVariant="full">Salvar atividade</Button>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }

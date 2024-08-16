@@ -1,7 +1,8 @@
-import { X, User, Mail } from "lucide-react";
+import { User, Mail } from "lucide-react";
 import { FormEvent } from "react";
 import { Trip } from "../../routes/createTrip";
 import { Button } from "../button";
+import { Modal } from "../modal";
 
 type ConfirmTripModalProps = {
   trip: Trip;
@@ -15,7 +16,7 @@ export function ConfirmTripModal({
   toogleConfirmModal,
 }: ConfirmTripModalProps) {
   return (
-    <div className="bg-black/50 fixed inset-0 backdrop-blur-sm flex items-center justify-center">
+    <Modal toogleFn={toogleConfirmModal}>
       <div className="shadow-shape bg-zinc-900 py-5 px-6 rounded-xl space-y-5 w-[640px] relative">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Confirmar criação da viagem</h3>
@@ -50,6 +51,6 @@ export function ConfirmTripModal({
           <Button>Confirmar criação da viagem</Button>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }

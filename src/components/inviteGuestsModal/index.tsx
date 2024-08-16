@@ -1,7 +1,8 @@
-import { ArrowRight, AtSign, X } from "lucide-react";
+import { ArrowRight, AtSign, X} from "lucide-react";
 import { Trip } from "../../routes/createTrip";
 import { FormEvent } from "react";
 import { Button } from "../button";
+import { Modal } from "../modal";
 
 type InviteGuestsModalProps = {
   trip: Trip;
@@ -17,7 +18,7 @@ export function InviteGuestsModal({
   trip,
 }: InviteGuestsModalProps) {
   return (
-    <div className="bg-black/50 fixed inset-0 backdrop-blur-sm flex items-center justify-center">
+    <Modal toogleFn={toogleGuestModal}>
       <div className="shadow-shape bg-zinc-900 py-5 px-6 rounded-xl space-y-5 w-[640px] relative">
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Selecionar convidados</h3>
@@ -31,7 +32,7 @@ export function InviteGuestsModal({
           {trip.participants.map((email, index) => (
             <div
               key={index}
-              className="bg-zinc-800 px-2.5 py-1.5 rounded-md flex justify-between gap-2 items-center"
+              className="bg-zinc-800 px-2.5 py-1.5 rounded-md flex justify-between gap-2 items-center relative"
             >
               <span className="text-zinc-300 text-base">{email}</span>
               <button
@@ -62,6 +63,6 @@ export function InviteGuestsModal({
           </div>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }
