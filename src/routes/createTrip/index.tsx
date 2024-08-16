@@ -4,6 +4,7 @@ import { InviteGuestsModal } from "../../components/inviteGuestsModal";
 import { ConfirmTripModal } from "../../components/corfirmTripModal";
 import { DestinationAndDateInput } from "../../components/destinationAndDateInput";
 import { InviteGuestsInput } from "../../components/inviteGuestsInput";
+import { Header } from "../../components/header";
 
 export type Trip = {
   participants: string[];
@@ -74,12 +75,7 @@ export function CreateTrip() {
 
   return (
     <section className="h-screen w-full flex flex-col align items-center justify-center">
-      <header className="flex flex-col align items-center justify-center gap-2">
-        <img src="./images/logo.svg" alt="Planner logo" />
-        <p className="text-lg text-zinc-300">
-          Convide seus amigos e planeje sua próxima viagem!
-        </p>
-      </header>
+      <Header />
 
       <main className="flex flex-col gap-4 my-10 max-w-screen-md">
         <DestinationAndDateInput

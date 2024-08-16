@@ -3,6 +3,7 @@ import { DestinationAndDateInput } from "../../components/destinationAndDateInpu
 import { useState } from "react";
 import { CreateActivityModal } from "../../components/createActivityModal";
 import { Button } from "../../components/button";
+import { Header } from "../../components/header";
 
 export function TripDetails() {
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
@@ -13,6 +14,7 @@ export function TripDetails() {
 
   return (
     <>
+      <Header />
       <header className="max-w-6xl py-10 mx-auto space-y-8">
         <DestinationAndDateInput
           handleChange={() => {}}
