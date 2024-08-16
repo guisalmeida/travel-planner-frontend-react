@@ -1,27 +1,38 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { InviteGuestsModal } from "../../components/inviteGuestsModal";
 import { ConfirmTripModal } from "../../components/corfirmTripModal";
 import { DestinationAndDateInput } from "../../components/destinationAndDateInput";
 import { InviteGuestsInput } from "../../components/inviteGuestsInput";
+import { type DateRange } from "react-day-picker";
 import { Header } from "../../components/header";
+import { api } from "../../lib/axios";
+import { format } from "date-fns";
 
 export type Trip = {
   participants: string[];
-  date: Date;
+  eventStartAndEndRange: DateRange | undefined;
   destination: string;
+  ownerName: string;
+  ownerEmail: string;
 };
 
 export function CreateTrip() {
+  const navegate = useNavigate();
+
+  const [eventStartAndEndRange, setEventStartAndEndRange] = useState<
+    DateRange | undefined
+  >(undefined);
   const [isGuestListShow, setIsGuestListShow] = useState(false);
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [trip, setTrip] = useState<Trip>({
     participants: [],
-    date: new Date(),
+    eventStartAndEndRange: eventStartAndEndRange,
     destination: "",
+    ownerName: "",
+    ownerEmail: "",
   });
-  const navegate = useNavigate();
 
   function toogleGuestListShow() {
     setIsGuestListShow((prev) => !prev);
@@ -68,10 +79,38 @@ export function CreateTrip() {
     setTrip((prevTrip) => ({ ...prevTrip, participants: updatedList }));
   }
 
-  function confirmTrip(e: FormEvent<HTMLFormElement>) {
+  async function confirmTrip(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    navegate("/trips/123");
+    console.log(trip);
+
+    if (!trip.eventStartAndEndRange?.from || !trip.eventStartAndEndRange?.to) {
+      return;
+    }
+
+    const response = await api.post("/trips", {
+      destination: trip.destination,
+      starts_at: format(trip.eventStartAndEndRange.from, "yyyy-MM-dd HH:mm:ss"),
+      ends_at: format(trip.eventStartAndEndRange.to, "yyyy-MM-dd HH:mm:ss"),
+      emails_to_invite: trip.participants,
+      owner_name: trip.ownerName,
+      owner_email: trip.ownerEmail,
+    })
+
+    const { tripId } = response.data;
+
+    navegate(`/trips/${tripId}`);
   }
+
+  useEffect(() => {
+    setTrip((prevTrip) => {
+      return {
+        ...prevTrip,
+        eventStartAndEndRange: eventStartAndEndRange,
+      };
+    });
+  }, [eventStartAndEndRange]);
+
+  console.log(trip);
 
   return (
     <section className="h-screen w-full flex flex-col align items-center justify-center">
@@ -82,6 +121,8 @@ export function CreateTrip() {
           handleChange={handleChange}
           toogleGuestListShow={toogleGuestListShow}
           isGuestListShow={isGuestListShow}
+          dateRange={eventStartAndEndRange}
+          setDateRange={setEventStartAndEndRange}
         />
 
         {isGuestListShow && (
@@ -106,6 +147,7 @@ export function CreateTrip() {
             confirmTrip={confirmTrip}
             toogleConfirmModal={toogleConfirmModal}
             trip={trip}
+            handleChange={handleChange}
           />
         )}
       </main>

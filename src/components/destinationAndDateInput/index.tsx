@@ -10,32 +10,33 @@ type DestinationAndDateInputProps = {
   isGuestListShow: boolean;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   toogleGuestListShow: () => void;
+  dateRange: DateRange | undefined;
+  setDateRange: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 };
 
 export function DestinationAndDateInput({
+  dateRange,
+  setDateRange,
   isGuestListShow,
   handleChange,
   toogleGuestListShow,
 }: DestinationAndDateInputProps) {
   const [isDatePickerOpen, setIsDatePickerOpen] = useState(false);
   const defaultClassNames = getDefaultClassNames();
-  const today = new Date();
-  const tomorrow = new Date(today);
-  tomorrow.setDate(today.getDate() + 1);
-  const initialRange: DateRange = { from: today, to: tomorrow };
-  const [eventStartAndEndDates, setEventStartAndEndDates] =
-    useState<DateRange>(initialRange);
 
   function toogleDatePicker(value: boolean) {
     setIsDatePickerOpen(value);
   }
 
   let footer = `Please pick the first day.`;
-  if (eventStartAndEndDates?.from) {
-    if (!eventStartAndEndDates.to) {
-      footer = format(eventStartAndEndDates.from, "d");
-    } else if (eventStartAndEndDates.to) {
-      footer = `${format(eventStartAndEndDates.from, "d ' de 'LLL")} até ${format(eventStartAndEndDates.to, "d' de 'LLL")}`;
+  if (dateRange?.from) {
+    if (!dateRange?.to) {
+      footer = format(dateRange.from, "d");
+    } else if (dateRange?.to) {
+      footer = `${format(dateRange?.from, "d ' de 'LLL")} até ${format(
+        dateRange?.to,
+        "d' de 'LLL"
+      )}`;
     }
   }
 
@@ -59,7 +60,12 @@ export function DestinationAndDateInput({
         className="flex gap-2 items-center after:block after:w-px after:h-6 after:bg-zinc-400 text-left"
       >
         <Calendar className="size-5 text-zinc-400" />
-        <span className="text-lg text-zinc-400 w-40">Quando?</span>
+        <span className="text-md text-zinc-400 w-56">
+          {dateRange?.from && dateRange?.to
+            ? format(new Date(dateRange?.from as Date), "dd/MM/yyyy") + ' - ' +
+              format(new Date(dateRange?.to as Date), "dd/MM/yyyy")
+            : "Quando?"}
+        </span>
       </button>
 
       {isDatePickerOpen && (
@@ -69,8 +75,8 @@ export function DestinationAndDateInput({
             <DayPicker
               mode="range"
               min={2}
-              selected={eventStartAndEndDates}
-              onSelect={setEventStartAndEndDates}
+              selected={dateRange}
+              onSelect={setDateRange}
               footer={footer}
               classNames={{
                 today: `text-lime-300 font-semibold`,
@@ -79,7 +85,7 @@ export function DestinationAndDateInput({
                 range_start: `${defaultClassNames.range_start} bg-zinc-900 text-zinc-400`,
                 range_end: `${defaultClassNames.range_end} bg-zinc-900 text-zinc-400`,
                 day_button: `${defaultClassNames.day_button}`,
-                footer: `${defaultClassNames.footer} text-lime-300`
+                footer: `${defaultClassNames.footer} text-lime-300`,
               }}
               required
             />
