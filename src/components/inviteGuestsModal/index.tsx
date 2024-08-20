@@ -1,6 +1,6 @@
-import { ArrowRight, AtSign, X} from "lucide-react";
+import { ArrowRight, AtSign, X } from "lucide-react";
 import { Trip } from "../../routes/createTrip";
-import { FormEvent } from "react";
+import { FormEvent, useState } from "react";
 import { Button } from "../button";
 import { Modal } from "../modal";
 
@@ -17,6 +17,13 @@ export function InviteGuestsModal({
   removeFromGuestList,
   trip,
 }: InviteGuestsModalProps) {
+  const [guestEmail, setGuestEmail] = useState("");
+
+  function handleGuestList(e: FormEvent<HTMLFormElement>) {
+    addToGuestList(e);
+    setGuestEmail('');
+  }
+
   return (
     <Modal toogleFn={toogleGuestModal}>
       <div className="shadow-shape bg-zinc-900 py-5 px-6 rounded-xl space-y-5 w-[640px] relative">
@@ -47,7 +54,7 @@ export function InviteGuestsModal({
 
         <div className="w-full h-px bg-zinc-800" />
 
-        <form className="flex justify-between" onSubmit={addToGuestList}>
+        <form className="flex justify-between" onSubmit={handleGuestList}>
           <div className="bg-zinc-950 border border-zinc-800 rounded-lg flex items-center py-2.5 px-4 gap-2 w-full">
             <AtSign className="size-5 text-zinc-400" />
             <input
@@ -55,8 +62,10 @@ export function InviteGuestsModal({
               name="email"
               className="bg-transparent text-lg placeholder-zinc-400 flex-1 text-zinc-400"
               placeholder="Digite o e-mail do convidado"
+              onChange={(e) => setGuestEmail(e.target.value)}
+              required
             />
-            <Button>
+            <Button disabled={Boolean(!guestEmail)} >
               Convidar
               <ArrowRight className="size-5" />
             </Button>
