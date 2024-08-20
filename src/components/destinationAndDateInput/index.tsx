@@ -7,14 +7,16 @@ import { format } from "date-fns";
 import "react-day-picker/style.css";
 
 type DestinationAndDateInputProps = {
+  destination?: string;
   isGuestListShow: boolean;
   handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
   toogleGuestListShow: () => void;
-  dateRange: DateRange | undefined;
+  dateRange?: DateRange;
   setDateRange: React.Dispatch<React.SetStateAction<DateRange | undefined>>;
 };
 
 export function DestinationAndDateInput({
+  destination,
   dateRange,
   setDateRange,
   isGuestListShow,
@@ -47,6 +49,7 @@ export function DestinationAndDateInput({
         <input
           type="text"
           name="destination"
+          value={destination}
           className="bg-transparent text-lg text-zinc-400 placeholder-zinc-400 flex-1"
           placeholder="Para onde você vai?"
           onChange={handleChange}
@@ -79,13 +82,13 @@ export function DestinationAndDateInput({
               onSelect={setDateRange}
               footer={footer}
               classNames={{
-                today: `text-lime-300 font-semibold`,
-                chevron: `${defaultClassNames.chevron} fill-lime-300`,
+                today: `text-sky-300 font-semibold`,
+                chevron: `${defaultClassNames.chevron} fill-sky-300`,
                 selected: `${defaultClassNames.selected} bg-zinc-800 text-zinc-400`, // Highlight the selected day
                 range_start: `${defaultClassNames.range_start} bg-zinc-900 text-zinc-400`,
                 range_end: `${defaultClassNames.range_end} bg-zinc-900 text-zinc-400`,
                 day_button: `${defaultClassNames.day_button}`,
-                footer: `${defaultClassNames.footer} text-lime-300`,
+                footer: `${defaultClassNames.footer} text-sky-300`,
               }}
               required
             />

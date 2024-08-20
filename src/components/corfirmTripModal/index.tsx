@@ -18,7 +18,6 @@ export function ConfirmTripModal({
   confirmTrip,
   toogleConfirmModal,
 }: ConfirmTripModalProps) {
-  console.log(trip);
 
   return (
     <Modal toogleFn={toogleConfirmModal}>

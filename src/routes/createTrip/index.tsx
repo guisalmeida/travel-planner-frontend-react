@@ -8,13 +8,22 @@ import { type DateRange } from "react-day-picker";
 import { Header } from "../../components/header";
 import { api } from "../../lib/axios";
 import { format } from "date-fns";
+import { Footer } from "../../components/footer";
+import { Participant } from "../../components/guestsList";
+import { Link } from "../../components/linksList";
 
 export type Trip = {
-  participants: string[];
+  id?: string;
+  participants?: Participant[];
+  participantsEmailList: string[];
   eventStartAndEndRange: DateRange | undefined;
   destination: string;
   ownerName: string;
   ownerEmail: string;
+  starts_at?: string;
+  ends_at?: string;
+  isConfirmed?: boolean;
+  links?: Link[];
 };
 
 export function CreateTrip() {
@@ -27,7 +36,7 @@ export function CreateTrip() {
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false);
   const [trip, setTrip] = useState<Trip>({
-    participants: [],
+    participantsEmailList: [],
     eventStartAndEndRange: eventStartAndEndRange,
     destination: "",
     ownerName: "",
@@ -61,27 +70,26 @@ export function CreateTrip() {
     const data = new FormData(e.currentTarget);
     const email = data.get("email")?.toString();
 
-    if (!email || trip.participants?.includes(email)) {
+    if (!email || trip.participantsEmailList?.includes(email)) {
       return;
     }
 
     setTrip((prevTrip) => ({
       ...prevTrip,
-      participants: [...prevTrip.participants, email],
+      participantsEmailList: [...prevTrip.participantsEmailList, email],
     }));
     e?.currentTarget.reset();
   }
 
   function removeFromGuestList(email: string) {
-    const updatedList = trip.participants.filter(
+    const updatedList = trip.participantsEmailList.filter(
       (guestEmail) => guestEmail !== email
     );
-    setTrip((prevTrip) => ({ ...prevTrip, participants: updatedList }));
+    setTrip((prevTrip) => ({ ...prevTrip, participantsEmailList: updatedList }));
   }
 
   async function confirmTrip(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    console.log(trip);
 
     if (!trip.eventStartAndEndRange?.from || !trip.eventStartAndEndRange?.to) {
       return;
@@ -94,7 +102,7 @@ export function CreateTrip() {
       emails_to_invite: trip.participants,
       owner_name: trip.ownerName,
       owner_email: trip.ownerEmail,
-    })
+    });
 
     const { tripId } = response.data;
 
@@ -110,14 +118,11 @@ export function CreateTrip() {
     });
   }, [eventStartAndEndRange]);
 
-  console.log(trip);
-
   return (
     <section className="h-screen w-full flex flex-col align items-center justify-center">
-      <Header />
-
-      <main className="flex flex-col gap-4 my-10 max-w-screen-md">
+      <Header>
         <DestinationAndDateInput
+          destination={trip.destination}
           handleChange={handleChange}
           toogleGuestListShow={toogleGuestListShow}
           isGuestListShow={isGuestListShow}
@@ -132,7 +137,9 @@ export function CreateTrip() {
             trip={trip}
           />
         )}
+      </Header>
 
+      <main className="flex flex-col gap-4 my-10 max-w-screen-md">
         {isGuestModalOpen && (
           <InviteGuestsModal
             trip={trip}
@@ -152,21 +159,7 @@ export function CreateTrip() {
         )}
       </main>
 
-      <footer>
-        <small className="text-zinc-500 text-center w-full max-w-screen-md text-sm">
-          Ao planejar sua viagem pela plann.er você automaticamente concorda
-          <br />
-          com nossos{" "}
-          <a href="#" className="text-zinc-300 underline">
-            termos de uso
-          </a>{" "}
-          e{" "}
-          <a href="#" className="text-zinc-300 underline">
-            políticas de privacidade
-          </a>
-          .
-        </small>
-      </footer>
+      <Footer />
     </section>
   );
 }
