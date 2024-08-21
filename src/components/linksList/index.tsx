@@ -22,10 +22,7 @@ export function LinksList({ links, toogleCreateLinkModal }: LinksListProps) {
           links.length > 0 &&
           links.map((link) => (
             <a href={link.url} key={link.id} target="_blank">
-              <div
-                className="flex items-center justify-between hover:bg-sky-950 rounded py-1 px-2"
-                
-              >
+              <div className="flex items-center justify-between hover:bg-zinc-900 rounded py-1 px-2">
                 <div className="space-y-1.5">
                   <p className="text-zinc-100 font-medium capitalize">
                     {link.title}
