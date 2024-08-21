@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="w-full max-w-6xl text-center space-y-10">
+    <footer className="w-full max-w-6xl text-center space-y-10 mx-auto mt-8">
       <small className="text-zinc-500 text-center w-full max-w-screen-md text-sm">
         Ao planejar sua viagem pela plann.er você automaticamente concorda
         <br />

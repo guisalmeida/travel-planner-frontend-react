@@ -9,20 +9,25 @@ import { DestinationAndDateInput } from "../../components/destinationAndDateInpu
 import { GuestsList } from "../../components/guestsList";
 import { LinksList } from "../../components/linksList";
 import { ActivitiesList } from "../../components/activitiesList";
+import { CreateLinkModal } from "../../components/createLinkModal";
 
 export function TripDetails() {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | undefined>();
-
-  useEffect(() => {
-    api.get(`/trips/${tripId}`).then((response) => setTrip(response.data.trip));
-  }, [tripId]);
-
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
+  const [showCreateLinkModal, setShowCreateLinkModal] = useState(false);
 
   function toogleCreateActivityModal(value: boolean) {
     setShowCreateActivityModal(value);
   }
+
+  function toogleCreateLinkModal(value: boolean) {
+    setShowCreateLinkModal(value);
+  }
+
+  useEffect(() => {
+    api.get(`/trips/${tripId}`).then((response) => setTrip(response.data.trip));
+  }, [tripId]);
 
   return (
     <section className="py-8">
@@ -37,11 +42,14 @@ export function TripDetails() {
         />
       </Header>
 
-      <main className="max-w-6xl px-6 mx-auto flex gap-16">
+      <main className="max-w-6xl px-4 mx-auto flex gap-16">
         <ActivitiesList toogleCreateActivityModal={toogleCreateActivityModal} />
 
         <aside className="w-80 space-y-6 flex flex-col">
-          <LinksList links={trip?.links} />
+          <LinksList
+            links={trip?.links}
+            toogleCreateLinkModal={toogleCreateLinkModal}
+          />
           <div className="w-full h-px bg-zinc-800" />
           <GuestsList participants={trip?.participants} />
         </aside>
@@ -53,6 +61,10 @@ export function TripDetails() {
         <CreateActivityModal
           toogleCreateActivityModal={toogleCreateActivityModal}
         />
+      )}
+
+      {showCreateLinkModal && (
+        <CreateLinkModal toogleCreateLinkModal={toogleCreateLinkModal} />
       )}
     </section>
   );
