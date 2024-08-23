@@ -10,12 +10,14 @@ import { GuestsList } from "../../components/guestsList";
 import { LinksList } from "../../components/linksList";
 import { ActivitiesList } from "../../components/activitiesList";
 import { CreateLinkModal } from "../../components/createLinkModal";
+import { DateRange } from "react-day-picker";
 
 export function TripDetails() {
   const { tripId } = useParams();
   const [trip, setTrip] = useState<Trip | undefined>();
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
   const [showCreateLinkModal, setShowCreateLinkModal] = useState(false);
+  const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
 
   function toogleCreateActivityModal(value: boolean) {
     setShowCreateActivityModal(value);
@@ -26,8 +28,15 @@ export function TripDetails() {
   }
 
   useEffect(() => {
-    api.get(`/trips/${tripId}`).then((response) => setTrip(response.data.trip));
-  }, [tripId]);
+    api.get(`/trips/${tripId}`).then((response) => {
+      setTrip(response.data.trip);
+      const tripRangeDate = {
+        from: new Date(response.data.trip?.starts_at as string),
+        to: new Date(response.data.trip?.ends_at as string),
+      };
+      setDateRange(tripRangeDate);
+    });
+  }, [trip?.ends_at, trip?.starts_at, tripId]);
 
   return (
     <section className="py-8">
@@ -37,7 +46,7 @@ export function TripDetails() {
           handleChange={() => {}}
           isGuestListShow={true}
           toogleGuestListShow={() => {}}
-          dateRange={undefined}
+          dateRange={dateRange}
           setDateRange={() => undefined}
         />
       </Header>

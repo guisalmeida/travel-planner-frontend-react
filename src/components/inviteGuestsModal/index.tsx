@@ -21,7 +21,7 @@ export function InviteGuestsModal({
 
   function handleGuestList(e: FormEvent<HTMLFormElement>) {
     addToGuestList(e);
-    setGuestEmail('');
+    setGuestEmail("");
   }
 
   return (
@@ -36,20 +36,21 @@ export function InviteGuestsModal({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {trip.participants.map((email, index) => (
-            <div
-              key={index}
-              className="bg-zinc-800 px-2.5 py-1.5 rounded-md flex justify-between gap-2 items-center relative"
-            >
-              <span className="text-zinc-300 text-base">{email}</span>
-              <button
-                onClick={() => removeFromGuestList(email)}
-                className="size-5 rounded-sm hover:bg-zinc-700 flex items-center justify-center"
+          {trip.participantsEmailList &&
+            trip.participantsEmailList.map((email, index) => (
+              <div
+                key={index}
+                className="bg-zinc-800 px-2.5 py-1.5 rounded-md flex justify-between gap-2 items-center relative"
               >
-                <X className="text-zinc-300 size-4" />
-              </button>
-            </div>
-          ))}
+                <span className="text-zinc-300 text-base">{email}</span>
+                <button
+                  onClick={() => removeFromGuestList(email)}
+                  className="size-5 rounded-sm hover:bg-zinc-700 flex items-center justify-center"
+                >
+                  <X className="text-zinc-300 size-4" />
+                </button>
+              </div>
+            ))}
         </div>
 
         <div className="w-full h-px bg-zinc-800" />
@@ -65,7 +66,7 @@ export function InviteGuestsModal({
               onChange={(e) => setGuestEmail(e.target.value)}
               required
             />
-            <Button disabled={Boolean(!guestEmail)} >
+            <Button disabled={Boolean(!guestEmail)}>
               Convidar
               <ArrowRight className="size-5" />
             </Button>

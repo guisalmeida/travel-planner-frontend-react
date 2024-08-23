@@ -99,7 +99,7 @@ export function CreateTrip() {
       destination: trip.destination,
       starts_at: format(trip.eventStartAndEndRange.from, "yyyy-MM-dd HH:mm:ss"),
       ends_at: format(trip.eventStartAndEndRange.to, "yyyy-MM-dd HH:mm:ss"),
-      emails_to_invite: trip.participants,
+      emails_to_invite: trip.participantsEmailList,
       owner_name: trip.ownerName,
       owner_email: trip.ownerEmail,
     });
