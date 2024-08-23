@@ -9,3 +9,25 @@
 input {
   color-scheme: dark;
 }
+
+.rdp-range_start .rdp-day_button,
+.rdp-range_end .rdp-day_button {
+  background: #7dd3fc;
+}
+
+.rdp-selected .rdp-day_button {
+  border: #7dd3fc;
+}
+
+.rdp-day.rdp-range_start.rdp-selected .rdp-day_button,
+.rdp-day.rdp-range_end.rdp-selected .rdp-day_button {
+  color: #27272a;
+}
+
+.rdp-range_start {
+  background: linear-gradient(90deg, transparent 50%, #27272a 50%);;
+}
+
+.rdp-range_end {
+  background: linear-gradient(-90deg, transparent 50%, #27272a 50%);;
+}
