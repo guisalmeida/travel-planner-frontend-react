@@ -85,7 +85,10 @@ export function CreateTrip() {
     const updatedList = trip.participantsEmailList.filter(
       (guestEmail) => guestEmail !== email
     );
-    setTrip((prevTrip) => ({ ...prevTrip, participantsEmailList: updatedList }));
+    setTrip((prevTrip) => ({
+      ...prevTrip,
+      participantsEmailList: updatedList,
+    }));
   }
 
   async function confirmTrip(e: FormEvent<HTMLFormElement>) {
@@ -142,7 +145,7 @@ export function CreateTrip() {
       <main className="flex flex-col gap-4 my-10 max-w-screen-md">
         {isGuestModalOpen && (
           <InviteGuestsModal
-            trip={trip}
+            participantsEmailList={trip.participantsEmailList}
             addToGuestList={addToGuestList}
             removeFromGuestList={removeFromGuestList}
             toogleGuestModal={toogleGuestModal}

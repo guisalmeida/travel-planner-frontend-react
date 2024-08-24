@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { CreateActivityModal } from "../../components/createActivityModal";
 import { Header } from "../../components/header";
 import { Footer } from "../../components/footer";
@@ -14,7 +14,13 @@ import { DateRange } from "react-day-picker";
 
 export function TripDetails() {
   const { tripId } = useParams();
-  const [trip, setTrip] = useState<Trip | undefined>();
+  const [trip, setTrip] = useState<Trip>({
+    participantsEmailList: [],
+    eventStartAndEndRange: undefined,
+    destination: "",
+    ownerName: "",
+    ownerEmail: "",
+  });
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
   const [showCreateLinkModal, setShowCreateLinkModal] = useState(false);
   const [dateRange, setDateRange] = useState<DateRange | undefined>(undefined);
@@ -27,6 +33,32 @@ export function TripDetails() {
     setShowCreateLinkModal(value);
   }
 
+  function addToGuestList(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const data = new FormData(e.currentTarget);
+    const email = data.get("email")?.toString();
+
+    if (!email || trip.participantsEmailList?.includes(email)) {
+      return;
+    }
+
+    setTrip((prevTrip) => ({
+      ...prevTrip,
+      participantsEmailList: [...prevTrip.participantsEmailList, email],
+    }));
+    e?.currentTarget.reset();
+  }
+
+  function removeFromGuestList(email: string) {
+    const updatedList = trip.participantsEmailList.filter(
+      (guestEmail) => guestEmail !== email
+    );
+    setTrip((prevTrip) => ({
+      ...prevTrip,
+      participantsEmailList: updatedList,
+    }));
+  }
+
   useEffect(() => {
     api.get(`/trips/${tripId}`).then((response) => {
       setTrip(response.data.trip);
@@ -37,6 +69,8 @@ export function TripDetails() {
       setDateRange(tripRangeDate);
     });
   }, [trip?.ends_at, trip?.starts_at, tripId]);
+
+  console.log(trip);
 
   return (
     <section className="py-8">
@@ -60,7 +94,12 @@ export function TripDetails() {
             toogleCreateLinkModal={toogleCreateLinkModal}
           />
           <div className="w-full h-px bg-zinc-800" />
-          <GuestsList participants={trip?.participants} />
+          <GuestsList
+            addToGuestList={addToGuestList}
+            removeFromGuestList={removeFromGuestList}
+            participants={trip?.participants}
+            participantsEmailList={trip?.participantsEmailList as string[]}
+          />
         </aside>
       </main>
 

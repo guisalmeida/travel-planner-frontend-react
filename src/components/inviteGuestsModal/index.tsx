@@ -1,11 +1,10 @@
 import { ArrowRight, AtSign, X } from "lucide-react";
-import { Trip } from "../../routes/createTrip";
 import { FormEvent, useState } from "react";
 import { Button } from "../button";
 import { Modal } from "../modal";
 
 type InviteGuestsModalProps = {
-  trip: Trip;
+  participantsEmailList: string[];
   addToGuestList: (e: FormEvent<HTMLFormElement>) => void;
   toogleGuestModal: (value: boolean) => void;
   removeFromGuestList: (email: string) => void;
@@ -15,7 +14,7 @@ export function InviteGuestsModal({
   addToGuestList,
   toogleGuestModal,
   removeFromGuestList,
-  trip,
+  participantsEmailList,
 }: InviteGuestsModalProps) {
   const [guestEmail, setGuestEmail] = useState("");
 
@@ -36,8 +35,8 @@ export function InviteGuestsModal({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {trip.participantsEmailList &&
-            trip.participantsEmailList.map((email, index) => (
+          {participantsEmailList &&
+            participantsEmailList.map((email, index) => (
               <div
                 key={index}
                 className="bg-zinc-800 px-2.5 py-1.5 rounded-md flex justify-between gap-2 items-center relative"
