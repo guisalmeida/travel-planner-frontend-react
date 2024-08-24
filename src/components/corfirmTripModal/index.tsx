@@ -1,23 +1,40 @@
+import { FormEvent, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import { User, Mail } from "lucide-react";
-import { ChangeEvent, FormEvent } from "react";
-import { Trip } from "../../routes/createTrip";
+import { format } from "date-fns";
 import { Button } from "../button";
 import { Modal } from "../modal";
-import { format } from "date-fns";
+import { TripContext } from "../../contexts/tripContext";
+import { api } from "../../lib/axios";
 
-type ConfirmTripModalProps = {
-  trip: Trip;
-  handleChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  toogleConfirmModal: (value: boolean) => void;
-  confirmTrip: (e: FormEvent<HTMLFormElement>) => void;
-};
+export function ConfirmTripModal() {
+  const navegate = useNavigate();
+  const {
+    currentTrip,
+    handleChange,
+    toogleConfirmModal,
+    eventStartAndEndRange,
+  } = useContext(TripContext);
 
-export function ConfirmTripModal({
-  trip,
-  handleChange,
-  confirmTrip,
-  toogleConfirmModal,
-}: ConfirmTripModalProps) {
+  async function confirmTrip(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+
+    if (!eventStartAndEndRange?.from || !eventStartAndEndRange?.to) {
+      return;
+    }
+
+    const response = await api.post("/trips", {
+      destination: currentTrip.destination,
+      starts_at: format(eventStartAndEndRange.from, "yyyy-MM-dd HH:mm:ss"),
+      ends_at: format(eventStartAndEndRange.to, "yyyy-MM-dd HH:mm:ss"),
+      emails_to_invite: currentTrip.participantsEmailList,
+      owner_name: currentTrip.ownerName,
+      owner_email: currentTrip.ownerEmail,
+    });
+
+    const { tripId } = response.data;
+    navegate(`/trips/${tripId}`);
+  }
 
   return (
     <Modal toogleFn={toogleConfirmModal}>
@@ -25,12 +42,12 @@ export function ConfirmTripModal({
         <div className="space-y-2">
           <h3 className="text-lg font-semibold">Confirmar criação da viagem</h3>
           <p className="text-zinc-400 text-sm">{`Para concluir a criação da viagem para ${
-            trip.destination
+            currentTrip.destination
           } de ${format(
-            trip.eventStartAndEndRange?.from as Date,
+            eventStartAndEndRange?.from as Date,
             "dd/MM/yyyy"
           )} até ${format(
-            trip.eventStartAndEndRange?.to as Date,
+            eventStartAndEndRange?.to as Date,
             "dd/MM/yyyy"
           )} preencha seus dados abaixo:`}</p>
         </div>

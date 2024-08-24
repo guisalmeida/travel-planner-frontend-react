@@ -1,12 +1,6 @@
 import { Plus, SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "../button";
-
-export type Link = {
-  id: string;
-  title: string;
-  url: string;
-  trip_id: string;
-};
+import { Link } from "../../contexts/tripContext";
 
 type LinksListProps = {
   links?: Link[];

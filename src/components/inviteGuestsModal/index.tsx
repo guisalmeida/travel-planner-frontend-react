@@ -1,21 +1,12 @@
 import { ArrowRight, AtSign, X } from "lucide-react";
-import { FormEvent, useState } from "react";
+import { FormEvent, useContext, useState } from "react";
 import { Button } from "../button";
 import { Modal } from "../modal";
+import { TripContext } from "../../contexts/tripContext";
 
-type InviteGuestsModalProps = {
-  participantsEmailList: string[];
-  addToGuestList: (e: FormEvent<HTMLFormElement>) => void;
-  toogleGuestModal: (value: boolean) => void;
-  removeFromGuestList: (email: string) => void;
-};
-
-export function InviteGuestsModal({
-  addToGuestList,
-  toogleGuestModal,
-  removeFromGuestList,
-  participantsEmailList,
-}: InviteGuestsModalProps) {
+export function InviteGuestsModal() {
+  const { addToGuestList, toogleGuestModal, currentTrip, removeFromGuestList } =
+    useContext(TripContext);
   const [guestEmail, setGuestEmail] = useState("");
 
   function handleGuestList(e: FormEvent<HTMLFormElement>) {
@@ -35,8 +26,8 @@ export function InviteGuestsModal({
         </div>
 
         <div className="flex flex-wrap gap-2">
-          {participantsEmailList &&
-            participantsEmailList.map((email, index) => (
+          {currentTrip.participantsEmailList &&
+            currentTrip.participantsEmailList.map((email, index) => (
               <div
                 key={index}
                 className="bg-zinc-800 px-2.5 py-1.5 rounded-md flex justify-between gap-2 items-center relative"
