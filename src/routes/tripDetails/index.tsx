@@ -70,8 +70,6 @@ export function TripDetails() {
     });
   }, [trip?.ends_at, trip?.starts_at, tripId]);
 
-  console.log(trip);
-
   return (
     <section className="py-8">
       <Header>
