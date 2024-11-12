@@ -95,13 +95,13 @@ export function DestinationAndDateInput() {
               excludeDisabled={true}
               footer={footer}
               classNames={{
-                today: `text-sky-300 font-semibold`,
-                chevron: `${defaultClassNames.chevron} fill-sky-300`,
+                today: `text-blue-300 font-semibold`,
+                chevron: `${defaultClassNames.chevron} fill-blue-300`,
                 selected: `${defaultClassNames.selected} bg-zinc-800 text-zinc-400`,
                 range_start: `${defaultClassNames.range_start} bg-zinc-900`,
                 range_end: `${defaultClassNames.range_end} bg-zinc-900`,
-                day_button: `${defaultClassNames.day_button} hover:bg-sky-300 hover:text-zinc-800 border-sky-600 text-zinc-900`,
-                footer: `${defaultClassNames.footer} text-sky-300`,
+                day_button: `${defaultClassNames.day_button} hover:bg-blue-300 hover:text-zinc-800 border-blue-600 text-zinc-900`,
+                footer: `${defaultClassNames.footer} text-blue-300`,
               }}
               required
             />

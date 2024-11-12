@@ -36,7 +36,7 @@ export function LinksList({ links, toogleCreateLinkModal }: LinksListProps) {
       </div>
 
       <Button onClick={() => toogleCreateLinkModal(true)}>
-        <Plus className="size-5 text-sky-950 font-bold" />
+        <Plus className="size-5 text-blue-950 font-bold" />
         Cadastrar novo link
       </Button>
     </div>

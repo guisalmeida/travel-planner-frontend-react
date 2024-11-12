@@ -35,7 +35,7 @@ export function GuestsList() {
                 </span>
               </div>
               {participant.is_confirmed ? (
-                <CircleCheck className="size-5 text-sky-400 flex-shrink-0" />
+                <CircleCheck className="size-5 text-blue-400 flex-shrink-0" />
               ) : (
                 <CircleDashed className="size-5 text-zinc-400 flex-shrink-0" />
               )}
@@ -44,7 +44,7 @@ export function GuestsList() {
       </div>
 
       <Button onClick={() => toogleGuestModal(true)}>
-        <UserCog className="size-5 text-sky-950" />
+        <UserCog className="size-5 text-blue-950" />
         Gerenciar convidados
       </Button>
 
