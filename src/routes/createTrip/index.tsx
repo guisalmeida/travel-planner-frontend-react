@@ -10,15 +10,6 @@ import { TripContext } from "../../contexts/tripContext";
 export function CreateTrip() {
   const {isGuestListShow, isGuestModalOpen, isConfirmModalOpen} = useContext(TripContext);
 
-  // useEffect(() => {
-  //   setTrip((prevTrip) => {
-  //     return {
-  //       ...prevTrip,
-  //       eventStartAndEndRange: eventStartAndEndRange,
-  //     };
-  //   });
-  // }, [eventStartAndEndRange]);
-
   return (
     <section className="h-screen w-full flex flex-col align items-center justify-center">
       <Header>
