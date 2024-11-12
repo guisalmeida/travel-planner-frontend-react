@@ -1,12 +1,6 @@
 import { Plus, SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "../button";
-
-export type Link = {
-  id: string;
-  title: string;
-  url: string;
-  trip_id: string;
-};
+import { Link } from "../../contexts/tripContext";
 
 type LinksListProps = {
   links?: Link[];
@@ -42,7 +36,7 @@ export function LinksList({ links, toogleCreateLinkModal }: LinksListProps) {
       </div>
 
       <Button onClick={() => toogleCreateLinkModal(true)}>
-        <Plus className="size-5 text-sky-950 font-bold" />
+        <Plus className="size-5 text-blue-950 font-bold" />
         Cadastrar novo link
       </Button>
     </div>

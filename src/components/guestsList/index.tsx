@@ -1,30 +1,11 @@
+import { useContext, useState } from "react";
 import { CircleCheck, CircleDashed, UserCog } from "lucide-react";
 import { Button } from "../button";
-import { FormEvent, useState } from "react";
 import { InviteGuestsModal } from "../inviteGuestsModal";
+import { TripContext } from "../../contexts/tripContext";
 
-export type Participant = {
-  id: string;
-  name?: string;
-  email: string;
-  is_confirmed: boolean;
-  is_owner: boolean;
-  trip_id: string;
-};
-
-type GuestListProps = {
-  participants?: Participant[];
-  participantsEmailList: string[];
-  addToGuestList: (e: FormEvent<HTMLFormElement>) => void;
-  removeFromGuestList: (email: string) => void;
-};
-
-export function GuestsList({
-  participants,
-  participantsEmailList,
-  addToGuestList,
-  removeFromGuestList,
-}: GuestListProps) {
+export function GuestsList() {
+  const { currentTrip } = useContext(TripContext);
   const [isGuestModalOpen, setIsGuestModalOpen] = useState(false);
 
   function toogleGuestModal(value: boolean) {
@@ -36,9 +17,9 @@ export function GuestsList({
       <h2 className="text-xl text-zinc-50 font-semibold">Convidados</h2>
 
       <div className="space-y-5">
-        {participants &&
-          participants.length > 0 &&
-          participants.map((participant, index) => (
+        {currentTrip.participants &&
+          currentTrip.participants.length > 0 &&
+          currentTrip.participants.map((participant, index) => (
             <div
               className="flex items-center justify-between hover:bg-zinc-900 rounded py-1 px-2"
               key={participant.id}
@@ -54,7 +35,7 @@ export function GuestsList({
                 </span>
               </div>
               {participant.is_confirmed ? (
-                <CircleCheck className="size-5 text-sky-400 flex-shrink-0" />
+                <CircleCheck className="size-5 text-blue-400 flex-shrink-0" />
               ) : (
                 <CircleDashed className="size-5 text-zinc-400 flex-shrink-0" />
               )}
@@ -63,18 +44,11 @@ export function GuestsList({
       </div>
 
       <Button onClick={() => toogleGuestModal(true)}>
-        <UserCog className="size-5 text-sky-950" />
+        <UserCog className="size-5 text-blue-950" />
         Gerenciar convidados
       </Button>
 
-      {isGuestModalOpen && (
-        <InviteGuestsModal
-          participantsEmailList={participantsEmailList}
-          addToGuestList={addToGuestList}
-          removeFromGuestList={removeFromGuestList}
-          toogleGuestModal={toogleGuestModal}
-        />
-      )}
+      {isGuestModalOpen && <InviteGuestsModal />}
     </div>
   );
 }
